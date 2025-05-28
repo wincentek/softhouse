@@ -8,6 +8,7 @@ Jag funderade på hur jag skulle lösa detta och kom snabbt fram till att jag vi
 
 * Metod 1: Chat GPT ([chatgpt](chatgpt/README.md))
 * Metod 2: Python ([text2xml2text](text2xml2text/README.md))
+* Metod 3: DB, Backend, Frontend ([textservice-converter](textservice-converter/README.md))
 
 ---
 
@@ -58,6 +59,32 @@ Användaren är van att starta script via CLI. Användaren har behov att göra s
 [Instruktioner: text2xml2text](text2xml2text/README.md)
 
 Tid: ca 120min
+
+## Metod 3: Databas, Backend och Frontend
+
+Här ville jag testa att bygga ett något mer komplett system som simulerar hur ett riktigt textsystem kanske skulle fungera.
+
+### Databas
+
+En SQLite-databas håller användarna. Jag la inte tid på att parsa och skapa massa relationer mellan id och liknande. Det är helt enkelt en "blob" per användare. Vem vet – om kundens system gick rakt från proof-of-concept till produktion så är kanske även deras data sparat på samma, högst tvivelaktiga vis.
+
+### Backend (Textsystemet)
+
+Ett NodeJS/Express-backend läser raderna från SQLite-databasen och exponerar via REST en endpoint (/api/textservice) som returnerar datan formaterad enligt instruktionerna. Backend motsvarar alltså "Textsystemet".
+
+### Frontend (Vue, TypeScript, Vuetify)
+
+Det framgick inte hur data ska levereras eller matas in, så jag gjorde ett enkelt gränssnitt som kan läsa text från en URL (med Content-Type: text/plain) eller där man klistrar in hela textmassan direkt. XML visas som resultat, redo att kopieras.
+
+## Vem är användaren?
+
+Softhousepersonal är användaren, i praktiken känns ett sådant här gränssnitt tämligen overkill för uppgiften, men hävdar en fullstack så får en väl bevisa lite antar jag :)
+
+## Resultat
+
+[Instruktioner: textservice-converter](textservice-converter/README.md)
+
+Tid: ca 4-5h
 
 ## Förbättringsförslag uppdragsbeskrivning
 

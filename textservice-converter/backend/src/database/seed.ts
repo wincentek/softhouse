@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import { connectDatabase, insertTextServiceData, getConnection } from './database';
+import { connectDatabase, insertTextServiceData, clearTextServiceData } from './';
 
 dotenv.config();
 
@@ -179,8 +179,7 @@ async function seedDatabase() {
     await connectDatabase();
     
     // Clear existing data
-    const conn = getConnection();
-    await conn.execute('DELETE FROM textservice_data');
+    await clearTextServiceData();
     console.log('🗑️  Cleared existing data');
     
     // Parse data into person blocks

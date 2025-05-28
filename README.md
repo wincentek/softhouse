@@ -6,8 +6,8 @@
 
 Jag funderade på hur jag skulle lösa detta och kom snabbt fram till att jag vill lösa det på några olika vis.
 
-* Metod 1: Chat GPT ([chatgpt](https://file+.vscode-resource.vscode-cdn.net/Users/wipe/Documents/code/softhouse/arbetsprov/chatgpt/README.md))
-* Metod 2: Python ([text2xml2text](https://file+.vscode-resource.vscode-cdn.net/Users/wipe/Documents/code/softhouse/arbetsprov/text2xml2text/README.md))
+* Metod 1: Chat GPT ([chatgpt](chatgpt/README.md))
+* Metod 2: Python ([text2xml2text](text2xml2text/README.md))
 
 ---
 
@@ -29,43 +29,37 @@ Jag genererade 50-talet variationer av textdata och det var ju kul att se att de
 
 Användaren har låg datormognad men behöver konvertera några rader lite då och då på ett enkelt och (numera) bekant vis via en chatprompt.
 
-#### [ ](https://chatgpt.com/g/g-6835ec5574dc81919a9285e60e571739-arbetsprov-softhouse)
-
 ### **Resultat**
 
 ###### [Öppna Wincents custom GPT](https://chatgpt.com/g/g-6835ec5574dc81919a9285e60e571739-arbetsprov-softhouse)
 
-[Klicka här för systemprompt och exempeldata](https://file+.vscode-resource.vscode-cdn.net/Users/wipe/Documents/code/softhouse/arbetsprov/chatgpt/README.md)
+[Klicka här för systemprompt och exempeldata](chatgpt/README.md)
 
 **Tid:** ca 75min.
 
 ## Metod 2: Python - Text2Xml2Text
 
-[README: text2xml2text](https://file+.vscode-resource.vscode-cdn.net/Users/wipe/Documents/code/softhouse/arbetsprov/text2xml2text/README.md)
+Jag ämnar att avsevärt förbättra mina Pythonkunskaper, så jag passade på att göra en lösning i Python också. 
 
-Jag är inte supervass på Python, så jag bestämde mig för att kasta mig ut på djupt vatten. Hur svårt kan det vara? Det gick ju hyfsat att sno ihop något användbart.
-
-Jag har förvisso skrivit några små tools i Python för Open WebUI, så helt novis är jag inte. Men Google och Copilot är definitivt mina kompisar här. Jag satte ihop ett litet script som helt enkelt läser in datat ett format och konverterar till det andra.
-
-Jag kallar verktyget *Txt2Xml2Txt*
+Jag har förvisso skrivit några små tools i Python för Open WebUI, så helt novis är jag inte. Men Copilot, Claude och Google är definitivt mina kompisar här. Jag satte ihop ett litet script som helt enkelt läser in datat i det ena format och konverterar till det andra. Funkar åt båda hållen, som namnet *Txt2Xml2Txt* förhoppningsvis hintar om.
 
 ### Vem är användaren?
 
-Användaren är van att starta köra script via CLI. Det finns ett behov att göra större batchkonverteringar på några hundra rader eller fler med jämna mellanrum. Det är inte läge för ett system, men ett script som konverterar och automatiskt sparar en fil som kan skickas vidare till en mottagare underlättar.&#x20;
+Användaren är van att starta script via CLI. Användaren har behov att göra större batchkonverteringar på några hundra rader eller fler med jämna mellanrum. Det är inte läge för ett system, men ett script som konverterar och automatiskt sparar en fil som kan skickas vidare till en mottagare underlättar vardagen.
 
 ### **Resultat**
 
-[README: text2xml2text](https://file+.vscode-resource.vscode-cdn.net/Users/wipe/Documents/code/softhouse/arbetsprov/text2xml2text/README.md)
+[README: text2xml2text](text2xml2text/README.md)
 
 Tid: ca 120min
 
-## Förbättringsförslag
+## Förbättringsförslag uppdragsbeskrivning
 
 * Flytta in telefonnummer under adress
-* Förtydliga instruktioner huruvida en eller flera av typerna T och A kan existera. Det är rimligt att folk har flera adresser, men instruktionerna säger inget om det.
-* Dokumentera alla typer. Zipcode (zip-code? zip\_code? zip?) saknas i exempel.
+* Förtydliga instruktioner huruvida en eller flera av typerna T och A kan existera. Det är rimligt att folk har flera adresser och telefonnummer, men instruktionerna säger inget om det.
+* Dokumentera alla typer. Zipcode (zip-code? zip_code? zip?) saknas i exempel.
 
-## Mina val
+## Egna val
 
 * Jag gjorde antagande att flera A och T *kan* existera för en och samma person och har programmerat utefter det. Detta torde inte orsaka problem i en existerande logik som sannolikt fått ut det första värdet om fler existerar.
 * Jag hade velat flytta in `<phone>` under `<address>`, men denna ändring hade näst intill garanterat orsakat problem i existerande logik då värdet helt hade saknats i förväntad struktur, så det lät jag bli.

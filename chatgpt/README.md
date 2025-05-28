@@ -2,6 +2,11 @@
 # System prompt and test data
 This README contains the system prompt and test data that can be used with the custom GPT I built for text-to-xml conversion.
 
+## The custom GPT 
+Below you will find test data that you can use to convert text to xml, and also convert xml back to the text format.
+
+[Go to Arbetsprov - Softhouse custom GPT](https://chatgpt.com/g/g-6835ec5574dc81919a9285e60e571739-arbetsprov-softhouse)
+
 ## Systemprompt för custom ChatGPT
 
 ````

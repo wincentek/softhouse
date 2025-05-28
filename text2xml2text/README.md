@@ -7,8 +7,29 @@ The entire tool is implemented in Python, leveraging its standard library and bu
 
 ## 🛠️ Usage
 
+### Clone the Repository
+
+To get started, clone the project from the GitHub repository:
+
+```
+git clone git@github.com:wincentek/softhouse.git
+```
+
+Navigate to the `text2xml2text` folder:
+
+```
+cd softhouse/text2xml2text
+```
+
+### Run the Script
+
+Run the script using the following command:
+
 ```
 python text2xml2text.py --file your_input_file.txt
+
+Demo: 
+python text2xml2text.py --file demo.txt
 ```
 
 - Accepts either `.txt` or `.xml` as input.

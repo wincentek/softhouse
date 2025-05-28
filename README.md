@@ -6,11 +6,8 @@
 
 Jag funderade på hur jag skulle lösa detta och kom snabbt fram till att jag vill lösa det på några olika vis.
 
-&#x20;
-
-###### - Metod 1: Chat GPT
-
-###### - Metod 2: Python ([text2xml2text](text2xml2text/README.md))
+* Metod 1: Chat GPT ([chatgpt](https://file+.vscode-resource.vscode-cdn.net/Users/wipe/Documents/code/softhouse/arbetsprov/chatgpt/README.md))
+* Metod 2: Python ([text2xml2text](https://file+.vscode-resource.vscode-cdn.net/Users/wipe/Documents/code/softhouse/arbetsprov/text2xml2text/README.md))
 
 ---
 
@@ -20,7 +17,7 @@ Att löpande hålla detta dokumentet uppdaterat så att ni kan ta del av mitt t�
 
 Ackumulerad tid: ca 75min. 
 
-## Metod 1: ChatGPT
+## Metod 1: ChatGPT - Custom GPT
 
 ###### Ett sätt jag ville prova var att använda ChatGPT, så jag skapade en egen GPT för ändamålet, och det gick ju ganska så bra.
 
@@ -28,30 +25,37 @@ Jag knåpade på en systemprompt som definerade uppdraget, förutsättningarna o
 
 Jag genererade 50-talet variationer av textdata och det var ju kul att se att den formatterar både fram och tillbaka mellan formaten. Vad som händer om textdata är helt galet felformatterat vet jag inte, men jag ville bara testa konceptet lite snabbt.
 
-#### **Kolla här:**[ https://chatgpt.com/g/g-6835ec5574dc81919a9285e60e571739-arbetsprov-softhouse](https://chatgpt.com/g/g-6835ec5574dc81919a9285e60e571739-arbetsprov-softhouse)
-
-**Exempeldata finner du längst ner i dokumentet.**
-
-#### Vem är användaren?&#x20;
+### **Vem är användaren?**
 
 Användaren har låg datormognad men behöver konvertera några rader lite då och då på ett enkelt och (numera) bekant vis via en chatprompt.
 
+#### [ ](https://chatgpt.com/g/g-6835ec5574dc81919a9285e60e571739-arbetsprov-softhouse)
+
+### **Resultat**
+
+###### [Öppna Wincents custom GPT](https://chatgpt.com/g/g-6835ec5574dc81919a9285e60e571739-arbetsprov-softhouse)
+
+[Klicka här för systemprompt och exempeldata](https://file+.vscode-resource.vscode-cdn.net/Users/wipe/Documents/code/softhouse/arbetsprov/chatgpt/README.md)
+
 **Tid:** ca 75min.
 
-## Metod 2: Python - Text2XmlToText
-[README: text2xml2text](text2xml2text/README.md)
+## Metod 2: Python - Text2Xml2Text
+
+[README: text2xml2text](https://file+.vscode-resource.vscode-cdn.net/Users/wipe/Documents/code/softhouse/arbetsprov/text2xml2text/README.md)
 
 Jag är inte supervass på Python, så jag bestämde mig för att kasta mig ut på djupt vatten. Hur svårt kan det vara? Det gick ju hyfsat att sno ihop något användbart.
 
 Jag har förvisso skrivit några små tools i Python för Open WebUI, så helt novis är jag inte. Men Google och Copilot är definitivt mina kompisar här. Jag satte ihop ett litet script som helt enkelt läser in datat ett format och konverterar till det andra.
 
-Jag kallar det Txt2Xml2Txt
+Jag kallar verktyget *Txt2Xml2Txt*
 
-#### Kolla här: 
-
-#### Vem är användaren?
+### Vem är användaren?
 
 Användaren är van att starta köra script via CLI. Det finns ett behov att göra större batchkonverteringar på några hundra rader eller fler med jämna mellanrum. Det är inte läge för ett system, men ett script som konverterar och automatiskt sparar en fil som kan skickas vidare till en mottagare underlättar.&#x20;
+
+### **Resultat**
+
+[README: text2xml2text](https://file+.vscode-resource.vscode-cdn.net/Users/wipe/Documents/code/softhouse/arbetsprov/text2xml2text/README.md)
 
 Tid: ca 120min
 

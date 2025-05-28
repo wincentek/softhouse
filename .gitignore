@@ -39,3 +39,7 @@ bower_components/
 # Miscellaneous
 *.bak
 *.orig
+
+## project specific
+docker-compose.yml
+file-structure.md

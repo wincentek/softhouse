@@ -8,7 +8,10 @@ export class TextServiceParser {
     
     const [type, ...parts] = trimmed.split('|')
     
-    if (!['P', 'T', 'A', 'F'].includes(type)) return null
+    if (!['P', 'T', 'A', 'F'].includes(type)) {
+      console.warn(`Unknown line type: '${type}' in line: ${line}`)
+      return null
+    }
     
     return {
       type: type as LineType,

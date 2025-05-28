@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host --force",
     "build": "vue-tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview --host",
+    "dev:debug": "vite --host --force --debug hmr"
   },
   "dependencies": {
     "vue": "^3.3.4",

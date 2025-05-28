@@ -27,6 +27,10 @@ Jag genererade 50-talet variationer av textdata och det var ju kul att se att de
 
 Vad som händer om textdata är helt galet felformatterat? Vad händer om det ena eller det andra? Det vet jag inte heller, men jag ville testa konceptet lite snabbt, och som koncept för en lite lösning funkade det bra.
 
+En bonus är ju att när textmassan konverterats så kan användaren ställa frågor som t.ex 
+* Vilken familj tillhör Melker?
+* Vad har Victoria för telefonnummer?
+
 ### **Vem är användaren?**
 
 Användaren har låg datormognad men behöver konvertera några rader lite då och då på ett enkelt vis.

@@ -45,6 +45,8 @@ export const useConverterStore = defineStore('converter', () => {
     try {
       const data = await ApiClient.fetchFromUrl(url)
       inputText.value = data
+      // Automatically genereate XML output when data is fetched 
+      convertToOutput('xml')
     } catch (err) {
       error.value = err instanceof Error ? err.message : 'Failed to fetch data'
       inputText.value = ''
@@ -116,9 +118,6 @@ export const useConverterStore = defineStore('converter', () => {
   return {
     // State
     inputText,
-    outputText,
-    outputXml,
-    outputJson,
     isLoading,
     error,
     inputMode,

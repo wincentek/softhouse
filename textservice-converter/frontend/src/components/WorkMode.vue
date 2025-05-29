@@ -1,14 +1,11 @@
 <template>
-  <div>
-    
+  <div class="max-width-100 max-height-100">
+
     <!-- Input Mode Toggle -->
     <v-container>
       <v-row class="">
         <div>
-          <v-radio-group
-            v-model="inputMode"
-            inline
-            class="text-caption">
+          <v-radio-group v-model="inputMode" inline class="text-caption">
             <v-radio label="Get from URL" value="url"></v-radio>
             <v-radio label="Paste Text" value="text"></v-radio>
           </v-radio-group>
@@ -16,28 +13,16 @@
       </v-row>
 
       <!-- URL Input Mode -->
-      <v-row dense v-if="inputMode === 'url'" class="" >
+      <v-row dense v-if="inputMode === 'url'" class="">
         <v-col cols="12">
-          <v-text-field
-            v-model="urlInput"
-            label="URL to TextService endpoint"
-            color="primary"
-            variant="outlined"
-            :loading="isLoading"
-            :disabled="isLoading"
-            class="negative-margin-bottom"
-          />
+          <v-text-field v-model="urlInput" label="URL to TextService endpoint" color="primary" variant="outlined"
+            :loading="isLoading" :disabled="isLoading" class="negative-margin-bottom" />
           <div class="bg-purple text-center mt-3">
-              <v-btn    
-                class="w-100 mt-0"
-                @click="fetchFromUrl(urlInput)"
-                color="primary"
-                :loading="isLoading"
-                :disabled="isLoading || !urlInput"
-                :size="buttonSize">
-                <v-icon left>mdi-download</v-icon>
-                Fetch
-              </v-btn>
+            <v-btn class="w-100 mt-0" @click="fetchFromUrl(urlInput)" color="primary" :loading="isLoading"
+              :disabled="isLoading || !urlInput" :size="buttonSize">
+              <v-icon left>mdi-download</v-icon>
+              Fetch
+            </v-btn>
           </div>
         </v-col>
       </v-row>
@@ -47,40 +32,81 @@
         <div class="pl-3 pr-3 w-100 align-end justify-space-between">
           <div class="align-end justify-space-between">
             <!-- Text Button -->
-            <v-btn :disabled="!hasInput" class="mr-2 text-on-primary" @click="convertToOutput('text')" color="secondary" :size="buttonSize">
-              <v-icon left class="mr-1">mdi-code-tags</v-icon>
-              Text
+            <v-btn :disabled="!hasInput" class="mr-2 text-on-primary" @click="convertToOutput('text')" color="secondary"
+              :size="buttonSize" :variant="outputFormat == 'text' ? undefined : 'tonal'">
+              <v-icon left class="mr-1">mdi-alpha-t-circle-outline</v-icon>
+              <p v-if="!xs">Text</p>
             </v-btn>
 
             <!-- Convert to XML Button -->
-            <v-btn :disabled="!hasInput" class="mr-2 text-on-primary" @click="convertToOutput('xml')" color="secondary" :size="buttonSize">
+            <v-btn :disabled="!hasInput" class="mr-2 text-on-primary" @click="convertToOutput('xml')" color="secondary"
+              :size="buttonSize" :variant="outputFormat == 'xml' ? undefined : 'tonal'">
               <v-icon left class="mr-1">mdi-code-tags</v-icon>
-              XML
+              <p v-if="!xs">XML</p>
             </v-btn>
 
             <!-- Convert to JSON Button -->
-            <v-btn :disabled="!hasInput" class="text-on-primary" @click="convertToOutput('json')" color="secondary" :size="buttonSize">
+            <v-btn :disabled="!hasInput" class="mr-6 text-on-primary" @click="convertToOutput('json')" color="secondary"
+              :size="buttonSize" :variant="outputFormat == 'json' ? undefined : 'tonal'">
               <v-icon left class="mr-1">mdi-code-json</v-icon>
-              JSON
+              <p v-if="!xs">JSON</p>
+            </v-btn>
+
+            <!-- Copy Button -->
+            <v-btn :disabled="!hasInput" class="mr-2 text-on-primary" @click="copyToClipboard('json')" color="secondary"
+              :size="buttonSize">
+              <v-icon left class="mr-1">mdi-content-copy</v-icon>
+              <p v-if="!xs">Copy</p>
             </v-btn>
           </div>
 
-          <!-- Clear Button -->
+          <!-- Right column -->
           <div class="">
-            <v-btn :disabled="!hasInput" class="text-on-primary" @click="clearAll" color="secondary" variant="outlined" :size="buttonSize">
-              <v-icon left class="mr-0">mdi-close</v-icon>
-              Clear
-            </v-btn>
+            <!-- Clear Button -->
+            <v-btn size="x-small" icon="mdi-close" :disabled="!hasInput" @click="clearAll" color="red" />
           </div>
         </div>
 
       </v-row>
 
+      <!-- Text Input/Visualizer -->
+      <v-row>
+        <v-col>
+          <!-- <v-card elevation="2"> -->
+          <!-- <v-card-title class="text-primary text-center">
+              <v-icon left>mdi-file-document</v-icon>
+              Fetched TextService Data
+            </v-card-title> -->
+          <!-- <v-card-text> -->
+          <pre class="text-secondary text-body-2 pa-2 rounded centered-pre">{{ currentOutput }}</pre>
+          <!-- </v-card-text> -->
+          <!-- </v-card> -->
+        </v-col>
+      </v-row>
+
+      <!-- Text Input Mode -->
+      <!-- <v-row class="mb-4 w-100" justify="center">
+        <v-col class="bg-green mb-4" cols="12">
+          <v-textarea
+            v-model="inputText"
+            label="Paste your TextService data here..."
+            color="primary"
+            variant="outlined"
+            rows="12"
+            auto-grow
+            placeholder="P|FirstName|LastName&#10;T|mobile|landline&#10;A|street|city|zip&#10;F|name|year"
+            class=""
+          />
+        </v-col>
+      </v-row> -->
+
     </v-container>
-    
+
+
+
     <!-- Text Input Mode -->
-    <v-row v-if="inputMode === 'text'" class="mb-4 w-100">
-      <v-col cols="12">
+    <!-- <v-row v-if="inputMode === 'text'" class="mb-4 w-100"> -->
+    <!-- <v-col cols="12">
         <v-textarea
           v-model="inputText"
           label="Paste your TextService data here..."
@@ -91,10 +117,10 @@
           placeholder="P|FirstName|LastName&#10;T|mobile|landline&#10;A|street|city|zip&#10;F|name|year"
         />
       </v-col>
-    </v-row>
+    </v-row> -->
 
     <!-- Input Display (when fetched) -->
-    <v-row v-if="hasInput && inputMode === 'url'" class="mb-4" justify="center">
+    <!--  <v-row v-if="hasInput && inputMode === 'url'" class="mb-4" justify="center">
       <v-col cols="12">
         <v-card color="surface" elevation="2">
           <v-card-title class="text-primary text-center">
@@ -106,10 +132,10 @@
           </v-card-text>
         </v-card>
       </v-col>
-    </v-row>
+    </v-row> -->
 
     <!-- Error Display -->
-    <v-row v-if="error" class="mb-4" justify="center">
+    <!-- <v-row v-if="error" class="mb-4" justify="center">
       <v-col cols="12">
         <v-alert
           type="error"
@@ -117,11 +143,11 @@
           closable
           @click:close="error = ''"
         />
-      </v-col>
-    </v-row>
+      </v-col> -->
+    <!-- </v-row> -->
 
     <!-- Output Display -->
-    <v-row v-if="hasOutput" justify="center">
+    <!--  <v-row v-if="hasOutput" justify="center">
       <v-col cols="12">
         <v-card color="surface" elevation="2">
           <v-card-title class="text-primary text-center">
@@ -133,7 +159,7 @@
           </v-card-text>
         </v-card>
       </v-col>
-    </v-row>
+    </v-row> -->
   </div>
 </template>
 
@@ -143,19 +169,15 @@ import { storeToRefs } from 'pinia'
 import { useConverterStore } from '../stores/converter'
 import { computed } from 'vue'
 
-const { xs } = useDisplay()
+const { xs, md } = useDisplay()
 
 // Compute button size based on screen size
 const buttonSize = computed(() => (xs.value ? 'small' : undefined))
 
 const store = useConverterStore()
 
-const baseUrl = import.meta.env.VITE_API_BASE_URL || 'api/v1/textservice'
-
 const {
   inputText,
-  outputXml,
-  outputJson,
   isLoading,
   error,
   inputMode,
@@ -172,11 +194,23 @@ const {
   clearAll,
   setInputMode
 } = store
+
+// Copy the current text amount to the clipboard
+const copyToClipboard = (): void => {
+  navigator.clipboard.writeText(currentOutput.value).then(() => {
+    console.log("Object text copied to clipboard!");
+  }).catch(err => {
+    console.error("Failed to copy text: ", err);
+  });
+  
+  alert("Text copied to clipboard!");
+}
+
 </script>
 
 <style scoped>
-
-.output-display, .centered-pre {
+.output-display,
+.centered-pre {
   font-family: 'Courier New', monospace;
   white-space: pre-wrap;
   word-break: break-all;
@@ -190,13 +224,14 @@ pre {
 }
 
 .negative-margin-bottom {
-  margin-bottom: -26px; /* Moves the row closer to the previous element */
+  margin-bottom: -26px;
+  /* Moves the row closer to the previous element */
 }
 
 .align-end {
   display: flex;
-  justify-content: flex-start; /* Align content to the top */
+  justify-content: flex-start;
+  /* Align content to the top */
   justify-items: center;
 }
-
 </style>

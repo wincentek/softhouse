@@ -84,12 +84,6 @@ export const useConverterStore = defineStore('converter', () => {
       outputXml.value = ''
       outputJson.value = ''
     }
-
-    console.log('Conversion complete:', {
-      input: inputText.value,
-      output: currentOutput.value,
-      format: outputFormat.value
-    })
   }
 
   function clearAll() {

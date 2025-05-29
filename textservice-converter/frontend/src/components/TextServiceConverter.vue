@@ -23,23 +23,12 @@ import { useConverterStore } from '../stores/converter'
 const store = useConverterStore()
 
 const {
-  inputText,
-  outputXml,
-  outputJson,
-  isLoading,
   error,
   inputMode,
-  outputFormat,
-  urlInput,
-  hasInput,
-  hasOutput,
-  currentOutput
+  outputFormat
 } = storeToRefs(store)
 
 const {
-  fetchFromUrl,
-  convertToOutput,
-  clearAll,
   setInputMode
 } = store
 </script>
@@ -52,28 +41,4 @@ const {
   align-items: left;
 }
 
-.output-display, .centered-pre {
-  font-family: 'Courier New', monospace;
-  white-space: pre-wrap;
-  word-break: break-all;
-  max-height: 500px;
-  overflow-y: auto;
-  text-align: left;
-}
-
-.v-btn-toggle {
-  background-color: #08283F !important;
-}
-
-pre {
-  border: 1px solid #FFBC57;
-}
-
-.v-card-title {
-  justify-content: center;
-}
-
-.v-row {
-  justify-content: center;
-}
 </style>

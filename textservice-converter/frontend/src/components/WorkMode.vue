@@ -52,8 +52,8 @@
               <p v-if="!xs">JSON</p>
             </v-btn>
 
-            <!-- Copy Button -->
-            <v-btn :disabled="!hasInput" class="mr-2 text-on-primary" @click="copyToClipboard('json')" color="secondary"
+            <!-- Copy text Button -->
+            <v-btn :disabled="!hasInput" class="mr-2 text-on-primary" @click="copyToClipboard" color="secondary"
               :size="buttonSize">
               <v-icon left class="mr-1">mdi-content-copy</v-icon>
               <p v-if="!xs">Copy</p>
@@ -177,14 +177,11 @@ const buttonSize = computed(() => (xs.value ? 'small' : undefined))
 const store = useConverterStore()
 
 const {
-  inputText,
   isLoading,
-  error,
   inputMode,
   outputFormat,
   urlInput,
   hasInput,
-  hasOutput,
   currentOutput
 } = storeToRefs(store)
 
@@ -198,12 +195,12 @@ const {
 // Copy the current text amount to the clipboard
 const copyToClipboard = (): void => {
   navigator.clipboard.writeText(currentOutput.value).then(() => {
-    console.log("Object text copied to clipboard!");
+    console.log(`${outputFormat} copied to clipboard!`);
   }).catch(err => {
     console.error("Failed to copy text: ", err);
   });
   
-  alert("Text copied to clipboard!");
+  alert(`${outputFormat.value} copied to clipboard!`);
 }
 
 </script>

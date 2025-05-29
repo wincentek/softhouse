@@ -74,12 +74,6 @@
           </div>
         </div>
 
-        <!-- Right Column -->
-        <!-- <div class="align-end">
-           
-
-        </div> -->
-        
       </v-row>
 
     </v-container>

@@ -40,3 +40,15 @@ createApp(App)
   .use(pinia)
   .use(vuetify)
   .mount('#app')
+
+
+console.log(`> ###################
+> Hello Softhouse!
+> ###################
+>
+> I hope you enjoy this little tool.
+>
+> If you have any questions, feel free to ask!
+>
+> Your friendly TextService Converter Team
+> // Wincent Ek`);

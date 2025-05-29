@@ -22,7 +22,6 @@ export class ApiClient {
   }
 
   static async fetchFromUrl(url: string): Promise<string> {
-    console.log('Fetching from URL:', url)
     try {
       // For our local API endpoint
       if (url.includes('/api/v1/textservice')) {

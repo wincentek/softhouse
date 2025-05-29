@@ -50,12 +50,6 @@
               <p v-if="!xs">Copy</p>
             </v-btn>
           </div>
-
-          <!-- Right column -->
-          <div class="">
-            <!-- Clear Button -->
-            <v-btn size="x-small" icon="mdi-close" :disabled="!hasInput" @click="clearAll" color="red" />
-          </div>
         </div>
 
       </v-row>
@@ -67,18 +61,29 @@
             :class="['text-caption', 'mb-0', outputFormat !== 'text' ? 'text-secondary' : 'text-white']">
             {{ outputFormat !== 'text' ? 'Converted data (switch to TEXT for manual input)' : 'Paste your TextService data here...' }}
           </label>
-          <div :style="`max-height: 55vh; overflow-y: auto; border: 1px solid ${outputFormat === 'text' ? '#FFFFFF' : '#FFBC57'}; border-radius: 4px;`" class="pl-2 pt-2">
-            <v-textarea
-              v-model="editableText"
-              color="primary"
-              variant="plain"
-              auto-grow
-              hide-details
-              placeholder="P|FirstName|LastName&#10;T|mobile|landline&#10;A|street|city|zip&#10;F|name|year"
-              :class="[outputFormat !== 'text' ? 'text-secondary' : 'text-white']"
-              :readonly="outputFormat !== 'text'"
-              style="margin-top: -16px; font-family: 'Courier New', 'Monaco', 'Consolas', monospace; font-size: 12px;"
+          <div style="position: relative;">
+            <!-- Clear Button positioned in top-right corner -->
+            <v-btn 
+              size="x-small" 
+              icon="mdi-close" 
+              :disabled="!hasInput" 
+              @click="clearAll" 
+              color="red-darken-4" 
+              style="position: absolute; top: 6px; right: 6px; z-index: 10;"
             />
+            <div :style="`max-height: 55vh; overflow-y: auto; border: 1px solid ${outputFormat === 'text' ? '#FFFFFF' : '#FFBC57'}; border-radius: 4px;`" class="pl-2 pt-2">
+              <v-textarea
+                v-model="editableText"
+                color="primary"
+                variant="plain"
+                auto-grow
+                hide-details
+                placeholder="P|FirstName|LastName&#10;T|mobile|landline&#10;A|street|city|zip&#10;F|name|year"
+                :class="[outputFormat !== 'text' ? 'text-secondary' : 'text-white']"
+                :readonly="outputFormat !== 'text'"
+                style="margin-top: -16px; font-family: 'Courier New', 'Monaco', 'Consolas', monospace; font-size: 12px;"
+              />
+            </div>
           </div>
         </v-col>
       </v-row>

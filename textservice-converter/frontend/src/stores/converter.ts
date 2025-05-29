@@ -14,8 +14,7 @@ export const useConverterStore = defineStore('converter', () => {
   const outputJson = ref('')
   const isLoading = ref(false)
   const error = ref('')
-  const inputMode = ref<'url' | 'text'>('url')
-  const outputFormat = ref<'xml' | 'json' | 'text'>('xml')
+  const outputFormat = ref<'xml' | 'json' | 'text'>('text')
   const urlInput = ref(import.meta.env.VITE_API_BASE_URL ? `${import.meta.env.VITE_API_BASE_URL}/textservice` : 'api/v1/textservice')
 
   // Computed
@@ -44,12 +43,12 @@ export const useConverterStore = defineStore('converter', () => {
     
     try {
       const data = await ApiClient.fetchFromUrl(url)
-      inputText.value = data
+      setInputText(data)
       // Automatically genereate XML output when data is fetched 
       convertToOutput('xml')
     } catch (err) {
       error.value = err instanceof Error ? err.message : 'Failed to fetch data'
-      inputText.value = ''
+      setInputText('')
     } finally {
       isLoading.value = false
     }
@@ -65,6 +64,7 @@ export const useConverterStore = defineStore('converter', () => {
 
     try {
       error.value = ''
+
       const parsedData: ParsedData = TextServiceParser.parseTextService(inputText.value)
       if (outputFormat.value === 'text') {
         outputText.value = inputText.value.toString() // copy text, not a refernce.
@@ -87,7 +87,7 @@ export const useConverterStore = defineStore('converter', () => {
   }
 
   function clearAll() {
-    inputText.value = ''
+    setInputText('')
     outputText.value = ''
     outputXml.value = ''
     outputJson.value = ''
@@ -96,11 +96,6 @@ export const useConverterStore = defineStore('converter', () => {
 
   function setInputText(text: string) {
     inputText.value = text
-    error.value = ''
-  }
-
-  function setInputMode(mode: 'url' | 'text') {
-    inputMode.value = mode
     error.value = ''
   }
 
@@ -114,7 +109,6 @@ export const useConverterStore = defineStore('converter', () => {
     inputText,
     isLoading,
     error,
-    inputMode,
     outputFormat,
     urlInput,
     
@@ -127,7 +121,6 @@ export const useConverterStore = defineStore('converter', () => {
     fetchFromUrl,
     convertToOutput,
     clearAll,
-    setInputText,
-    setInputMode
+    setInputText
   }
 })

@@ -24,13 +24,9 @@ const store = useConverterStore()
 
 const {
   error,
-  inputMode,
   outputFormat
 } = storeToRefs(store)
 
-const {
-  setInputMode
-} = store
 </script>
 
 <style scoped>

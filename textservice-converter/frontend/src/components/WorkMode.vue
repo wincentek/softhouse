@@ -3,17 +3,8 @@
 
     <!-- Input Mode Toggle -->
     <v-container>
-      <v-row class="">
-        <div>
-          <v-radio-group v-model="inputMode" inline class="text-caption">
-            <v-radio label="Get from URL" value="url"></v-radio>
-            <v-radio label="Paste Text" value="text"></v-radio>
-          </v-radio-group>
-        </div>
-      </v-row>
-
       <!-- URL Input Mode -->
-      <v-row dense v-if="inputMode === 'url'" class="">
+      <v-row dense class="">
         <v-col cols="12">
           <v-text-field v-model="urlInput" label="URL to TextService endpoint" color="primary" variant="outlined"
             :loading="isLoading" :disabled="isLoading" class="negative-margin-bottom" />
@@ -32,9 +23,9 @@
         <div class="pl-3 pr-3 w-100 align-end justify-space-between">
           <div class="align-end justify-space-between">
             <!-- Text Button -->
-            <v-btn :disabled="!hasInput" class="mr-2 text-on-primary" @click="convertToOutput('text')" color="secondary"
+            <v-btn :disabled="!hasInput" class="mr-2 text-on-primary" @click="convertToOutput('text')" color="primary"
               :size="buttonSize" :variant="outputFormat == 'text' ? undefined : 'tonal'">
-              <v-icon left class="mr-1">mdi-alpha-t-circle-outline</v-icon>
+              <v-icon left class="mr-1">mdi-pen</v-icon>
               <p v-if="!xs">Text</p>
             </v-btn>
 
@@ -54,7 +45,7 @@
 
             <!-- Copy text Button -->
             <v-btn :disabled="!hasInput" class="mr-2 text-on-primary" @click="copyToClipboard" color="secondary"
-              :size="buttonSize">
+              :size="buttonSize" variant="outlined">
               <v-icon left class="mr-1">mdi-content-copy</v-icon>
               <p v-if="!xs">Copy</p>
             </v-btn>
@@ -72,96 +63,27 @@
       <!-- Text Input/Visualizer -->
       <v-row>
         <v-col>
-          <!-- <pre class="text-secondary text-body-2 pa-2 rounded centered-pre">{{ currentOutput }}</pre> -->
-           <v-textarea
-            v-model="currentOutput"
-            label="Paste your TextService data here..."
-            color="primary"
-            variant="outlined"
-            rows="12"
-            auto-grow
-            placeholder="P|FirstName|LastName&#10;T|mobile|landline&#10;A|street|city|zip&#10;F|name|year"
-            class="pre text-secondary text-body-3 pa-1 rounded"
-          />
+          <label style="display: block;"
+            :class="['text-caption', 'mb-0', outputFormat !== 'text' ? 'text-secondary' : 'text-white']">
+            {{ outputFormat !== 'text' ? 'Converted data (switch to TEXT for manual input)' : 'Paste your TextService data here...' }}
+          </label>
+          <div :style="`max-height: 55vh; overflow-y: auto; border: 1px solid ${outputFormat === 'text' ? '#FFFFFF' : '#FFBC57'}; border-radius: 4px;`" class="pl-2 pt-2">
+            <v-textarea
+              v-model="editableText"
+              color="primary"
+              variant="plain"
+              auto-grow
+              hide-details
+              placeholder="P|FirstName|LastName&#10;T|mobile|landline&#10;A|street|city|zip&#10;F|name|year"
+              :class="[outputFormat !== 'text' ? 'text-secondary' : 'text-white']"
+              :readonly="outputFormat !== 'text'"
+              style="margin-top: -16px; font-family: 'Courier New', 'Monaco', 'Consolas', monospace; font-size: 12px;"
+            />
+          </div>
         </v-col>
       </v-row>
-
-      <!-- Text Input Mode -->
-      <!-- <v-row class="mb-4 w-100" justify="center">
-        <v-col class="bg-green mb-4" cols="12">
-          <v-textarea
-            v-model="inputText"
-            label="Paste your TextService data here..."
-            color="primary"
-            variant="outlined"
-            rows="12"
-            auto-grow
-            placeholder="P|FirstName|LastName&#10;T|mobile|landline&#10;A|street|city|zip&#10;F|name|year"
-            class=""
-          />
-        </v-col>
-      </v-row> -->
-
     </v-container>
 
-
-
-    <!-- Text Input Mode -->
-    <!-- <v-row v-if="inputMode === 'text'" class="mb-4 w-100"> -->
-    <!-- <v-col cols="12">
-        <v-textarea
-          v-model="inputText"
-          label="Paste your TextService data here..."
-          color="primary"
-          variant="outlined"
-          rows="8"
-          auto-grow
-          placeholder="P|FirstName|LastName&#10;T|mobile|landline&#10;A|street|city|zip&#10;F|name|year"
-        />
-      </v-col>
-    </v-row> -->
-
-    <!-- Input Display (when fetched) -->
-    <!--  <v-row v-if="hasInput && inputMode === 'url'" class="mb-4" justify="center">
-      <v-col cols="12">
-        <v-card color="surface" elevation="2">
-          <v-card-title class="text-primary text-center">
-            <v-icon left>mdi-file-document</v-icon>
-            Fetched TextService Data
-          </v-card-title>
-          <v-card-text>
-            <pre class="text-secondary text-body-2 pa-2 bg-background rounded centered-pre">{{ inputText }}</pre>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row> -->
-
-    <!-- Error Display -->
-    <!-- <v-row v-if="error" class="mb-4" justify="center">
-      <v-col cols="12">
-        <v-alert
-          type="error"
-          :text="error"
-          closable
-          @click:close="error = ''"
-        />
-      </v-col> -->
-    <!-- </v-row> -->
-
-    <!-- Output Display -->
-    <!--  <v-row v-if="hasOutput" justify="center">
-      <v-col cols="12">
-        <v-card color="surface" elevation="2">
-          <v-card-title class="text-primary text-center">
-            <v-icon left>{{ outputFormat === 'xml' ? 'mdi-code-tags' : 'mdi-code-json' }}</v-icon>
-            Generated {{ outputFormat.toUpperCase() }} Output
-          </v-card-title>
-          <v-card-text>
-            <pre class="text-secondary text-body-2 pa-4 bg-background rounded output-display">{{ currentOutput }}</pre>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row> -->
   </div>
 </template>
 
@@ -169,7 +91,7 @@
 import { useDisplay } from 'vuetify'
 import { storeToRefs } from 'pinia'
 import { useConverterStore } from '../stores/converter'
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
 
 const { xs, md } = useDisplay()
 
@@ -180,7 +102,6 @@ const store = useConverterStore()
 
 const {
   isLoading,
-  inputMode,
   outputFormat,
   urlInput,
   hasInput,
@@ -191,12 +112,26 @@ const {
   fetchFromUrl,
   convertToOutput,
   clearAll,
-  setInputMode
+  setInputText
 } = store
+
+// Create a separate reactive variable for the textarea
+const editableText = ref('')
+
+// Watch currentOutput and update editableText when it changes (from store)
+watch(currentOutput, (newValue) => {
+  editableText.value = newValue
+}, { immediate: true })
+
+// Watch editableText and update the store when user types (ONLY if int text mode)
+watch(editableText, (newValue) => {
+  if(outputFormat.value !== 'text') return; // Only update if in text mode
+  setInputText(newValue)
+})
 
 // Copy the current text amount to the clipboard
 const copyToClipboard = (): void => {
-  navigator.clipboard.writeText(currentOutput.value).then(() => {
+  navigator.clipboard.writeText(editableText.value).then(() => {
     console.log(`${outputFormat.value} copied to clipboard!`);
   }).catch(err => {
     console.error("Failed to copy text: ", err);

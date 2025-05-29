@@ -84,7 +84,7 @@ Softhousepersonal är användaren, i praktiken känns ett sådant här gränssni
 
 [Instruktioner: textservice-converter](textservice-converter/README.md)
 
-Tid: ca 4-5h
+Tid: ca 8-9h
 
 ## Förbättringsförslag uppdragsbeskrivning
 

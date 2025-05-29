@@ -72,15 +72,17 @@
       <!-- Text Input/Visualizer -->
       <v-row>
         <v-col>
-          <!-- <v-card elevation="2"> -->
-          <!-- <v-card-title class="text-primary text-center">
-              <v-icon left>mdi-file-document</v-icon>
-              Fetched TextService Data
-            </v-card-title> -->
-          <!-- <v-card-text> -->
-          <pre class="text-secondary text-body-2 pa-2 rounded centered-pre">{{ currentOutput }}</pre>
-          <!-- </v-card-text> -->
-          <!-- </v-card> -->
+          <!-- <pre class="text-secondary text-body-2 pa-2 rounded centered-pre">{{ currentOutput }}</pre> -->
+           <v-textarea
+            v-model="currentOutput"
+            label="Paste your TextService data here..."
+            color="primary"
+            variant="outlined"
+            rows="12"
+            auto-grow
+            placeholder="P|FirstName|LastName&#10;T|mobile|landline&#10;A|street|city|zip&#10;F|name|year"
+            class="pre text-secondary text-body-3 pa-1 rounded"
+          />
         </v-col>
       </v-row>
 
@@ -195,7 +197,7 @@ const {
 // Copy the current text amount to the clipboard
 const copyToClipboard = (): void => {
   navigator.clipboard.writeText(currentOutput.value).then(() => {
-    console.log(`${outputFormat} copied to clipboard!`);
+    console.log(`${outputFormat.value} copied to clipboard!`);
   }).catch(err => {
     console.error("Failed to copy text: ", err);
   });

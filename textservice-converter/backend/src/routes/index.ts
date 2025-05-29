@@ -3,7 +3,7 @@ import { getAllTextServiceData } from '../database';
 
 const router = Router();
 
-// GET /api/textservice - Returns all TextService data as plain text
+// GET /api/v1/textservice - Returns all TextService data as plain text
 router.get('/textservice', async (req: Request, res: Response) => {
   try {
     const textDataArray = await getAllTextServiceData();
@@ -18,7 +18,7 @@ router.get('/textservice', async (req: Request, res: Response) => {
   }
 });
 
-// GET /api/healthcheck - Simple health check endpoint
+// GET /api/v1/healthcheck - Simple health check endpoint
 router.get('/healthcheck', async (req: Request, res: Response) => {
   return res.status(200).send('Hello Softhouse. Allt bra eller? Här är det finfint :)');
 });

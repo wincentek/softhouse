@@ -18,7 +18,7 @@ const vuetify = createVuetify({
         dark: true,
         colors: {
           background: '#08283F',      // Deep navy Softhouseish background
-          surface: '#08283F',         // Match background for uniform surfaces
+          surface: '#15283F',         // Match background for uniform surfaces
           primary: '#ffffff',         // highlight (buttons, links, etc.)
           secondary: '#FFBC57',       // Softhouseish Gold Text color on dark background
           'on-primary': '#000000',    // Text on primary color (e.g., black on gold)

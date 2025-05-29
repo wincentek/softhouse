@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || '/api',
+  baseURL: import.meta.env.VITE_API_BASE_URL || '/api/v1',
   timeout: 10000,
 })
 
@@ -22,9 +22,10 @@ export class ApiClient {
   }
 
   static async fetchFromUrl(url: string): Promise<string> {
+    console.log('Fetching from URL:', url)
     try {
       // For our local API endpoint
-      if (url.includes('/api/textservice')) {
+      if (url.includes('/api/v1/textservice')) {
         return await this.fetchTextServiceData()
       }
       

@@ -1,28 +1,20 @@
 <template>
   <v-app>
-    <v-app-bar color="background" elevation="0">
-      <v-container class="text-center">
-        <v-toolbar-title class="text-primary font-weight-bold">
-          Text to XML Converter
-        </v-toolbar-title>
-        <v-toolbar-title class="text-secondary font-weight-bold">
-          Convert pipe-delimited text format to structured XML
-        </v-toolbar-title>
-      </v-container>
-    </v-app-bar>
+    <AppHeader></AppHeader>
 
-    <v-main>
-      <v-container class="d-flex justify-center">
-        <div class="converter-wrapper">
-          <TextServiceConverter />
-        </div>
-      </v-container>
-    </v-main>
+    <WorkMode></WorkMode>
+
+    <div class="mt-8 bg-black">
+        <TextServiceConverter />
+    </div>
   </v-app>
 </template>
 
 <script setup lang="ts">
+import AppHeader from './components/AppHeader.vue';
 import TextServiceConverter from './components/TextServiceConverter.vue'
+import WorkMode from './components/WorkMode.vue';
+
 </script>
 
 <style scoped>

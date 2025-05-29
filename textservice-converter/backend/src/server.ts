@@ -14,7 +14,7 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use('/api', textServiceRoutes);
+app.use('/api/v1', textServiceRoutes);
 
 // Health check
 app.get('/health', (req, res) => {
@@ -29,7 +29,7 @@ async function startServer() {
     
     app.listen(PORT, () => {
       console.log(`🚀 Server running on port ${PORT}`);
-      console.log(`📡 API available at http://localhost:${PORT}/api`);
+      console.log(`📡 API available at http://localhost:${PORT}/api/v1`);
     });
   } catch (error) {
     console.error('❌ Failed to start server:', error);

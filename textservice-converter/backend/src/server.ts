@@ -34,7 +34,7 @@ async function startServer() {
     
     app.listen(PORT, '0.0.0.0', () => {
       console.log(`🚀 Server running on port ${PORT}`);
-      console.log(`📡 API available at http://localhost:${PORT}/api/v1`);
+      console.log(`📡 API available at http://localhost:${PORT}/api/v1/textservice`);
     });
   } catch (error) {
     console.error('❌ Failed to start server:', error);

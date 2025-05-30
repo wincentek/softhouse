@@ -7,14 +7,17 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies (no build tools needed for sql.js)
-RUN npm ci --only=production
+# Install all dependencies (including devDependencies)
+RUN npm install
 
 # Copy source code
 COPY . .
 
 # Build TypeScript
 RUN npm run build
+
+# Remove devDependencies to reduce image size
+RUN npm prune --production
 
 # Create directory for SQLite database
 RUN mkdir -p /app/data

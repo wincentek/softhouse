@@ -46,7 +46,6 @@ docker-compose up
 ```bash
 cd backend
 npm install
-npm run seed    # Create and populate database
 npm run dev     # Development server on port 3001
 ```
 

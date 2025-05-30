@@ -44,10 +44,10 @@ export const useToastStore = defineStore('toast', () => {
   }
 
   // Convenience methods
-  const showSuccess = (message: string, duration?: number) => showToast(message, 'success', duration)
-  const showError = (message: string, duration?: number) => showToast(message, 'error', duration)
-  const showWarning = (message: string, duration?: number) => showToast(message, 'warning', duration)
-  const showInfo = (message: string, duration?: number) => showToast(message, 'info', duration)
+  const showSuccess = (message: string, duration: number = 5000) => showToast(message, 'success', duration)
+  const showError = (message: string, duration: number = 10000) => showToast(message, 'error', duration)
+  const showWarning = (message: string, duration: number = 10000) => showToast(message, 'warning', duration)
+  const showInfo = (message: string, duration: number = 10000) => showToast(message, 'info', duration)
 
   return {
     toasts,

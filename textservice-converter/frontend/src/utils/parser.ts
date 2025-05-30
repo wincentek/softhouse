@@ -43,6 +43,8 @@
  */
 
 import { Person, Address, Phone, FamilyMember, ParsedData, ParsedLine, LineType } from '../types'
+import { useToastStore } from '../stores/toast'
+import { de } from 'vuetify/locale'
 
 export class TextServiceParser {
   
@@ -51,9 +53,8 @@ export class TextServiceParser {
     if (!trimmed || !trimmed.includes('|')) return null
     
     const [type, ...parts] = trimmed.split('|')
-    
-    if (!['P', 'T', 'A', 'F'].includes(type)) {
-      console.warn(`Unknown line type: '${type}' in line: ${line}`)
+
+    if (!['P', 'T', 'A', 'F', 'p', 't', 'a', 'f'].includes(type)) {
       return null
     }
     
@@ -64,6 +65,8 @@ export class TextServiceParser {
   }
   
   static parseTextService(textData: string): ParsedData {
+    const faultyLines: string[] = []
+    const siblingLines: string[] = []
     const lines = textData.split('\n')
     const people: Person[] = []
     
@@ -72,9 +75,12 @@ export class TextServiceParser {
     
     for (const line of lines) {
       const parsed = this.parseLine(line)
-      if (!parsed) continue
+      if (!parsed) {
+        faultyLines.push(line)
+        continue
+      }
       
-      switch (parsed.type) {
+      switch (parsed.type.toUpperCase()) {
         case 'P':
           // 'P' indicates the start of a new person.
           // Each person has a first name and last name, followed by optional addresses, phones, and family members.
@@ -104,6 +110,9 @@ export class TextServiceParser {
             currentFamily.phones.push(phone)
           } else if (currentPerson) {
             currentPerson.phones.push(phone)
+          } else {
+            // If there is no current person to connect the info to, the line is considered a "faulty sibling".
+            siblingLines.push(line)
           }
           break
           
@@ -120,6 +129,9 @@ export class TextServiceParser {
             currentFamily.addresses.push(address)
           } else if (currentPerson) {
             currentPerson.addresses.push(address)
+          } else {
+            // If there is no current person to connect the info to, the line is considered a "faulty sibling".
+            siblingLines.push(line)
           }
           break
           
@@ -134,8 +146,17 @@ export class TextServiceParser {
               addresses: [],
               phones: []
             }
+
             currentPerson.family.push(currentFamily)
+          } else {
+            // If there is no current person to connect the info to, the line is considered a "faulty sibling".
+            siblingLines.push(line)
           }
+          break
+
+        default:
+          // If the line type is not recognized, it is considered as a related line to a previosuly falty line.
+          siblingLines.push(line)
           break
       }
     }
@@ -143,6 +164,13 @@ export class TextServiceParser {
     // Add the last person to the list of people if it exists.
     if (currentPerson) {
       people.push(currentPerson)
+    }
+    
+    if( faultyLines.length > 0) {
+      const toastStore = useToastStore();
+      toastStore.showError(`Found ${faultyLines.length} faulty line(s) in the input data, affecting ${siblingLines.length} sibling line(s). Line(s) were excluded from conversion.`);
+      console.error('Faulty lines:', faultyLines)
+      console.error('Sibling lines:', siblingLines)
     }
     
     return { people }

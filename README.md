@@ -1,7 +1,5 @@
 # Arbetsprov - Wincent Ek
 
-*(Denna journal uppdateras automatiskt utifrån inkommande inlägg)*
-
 ## Upplägg
 
 Jag funderade på hur jag skulle lösa detta och kom snabbt fram till att jag vill lösa det på några olika vis.

@@ -5,6 +5,7 @@ import { XmlGenerator } from '../utils/xmlGenerator'
 import { JsonGenerator } from '../utils/jsonGenerator'
 import { ApiClient } from '../utils/api'
 import type { ParsedData } from '../types'
+import { useToastStore } from '../stores/toast'
 
 export const useConverterStore = defineStore('converter', () => {
   // State
@@ -13,10 +14,10 @@ export const useConverterStore = defineStore('converter', () => {
   const outputXml = ref('')
   const outputJson = ref('')
   const isLoading = ref(false)
-  const error = ref('')
   const outputFormat = ref<'xml' | 'json' | 'text'>('text')
   const urlInput = ref(import.meta.env.VITE_API_BASE_URL ? `${import.meta.env.VITE_API_BASE_URL}/textservice` : 'api/v1/textservice')
-
+  const toastStore = useToastStore()
+  
   // Computed
   const hasInput = computed(() => inputText.value.trim().length > 0)
   const hasOutput = computed(() => {
@@ -33,13 +34,14 @@ export const useConverterStore = defineStore('converter', () => {
     if (outputFormat.value === 'xml') return outputXml.value
     if (outputFormat.value === 'json') return outputJson.value 
 
-    throw new Error(`Unknown output format: ${outputFormat.value}`);
+    toastStore.showError(`Unknown output format: ${outputFormat.value}`);
+    return ''
   })
 
   // Actions
   async function fetchFromUrl(url: string) {
+    console.log(`Fetching data from URL: ${url}`)
     isLoading.value = true
-    error.value = ''
     
     try {
       const data = await ApiClient.fetchFromUrl(url)
@@ -47,8 +49,9 @@ export const useConverterStore = defineStore('converter', () => {
       // Automatically genereate XML output when data is fetched 
       convertToOutput('xml')
     } catch (err) {
-      error.value = err instanceof Error ? err.message : 'Failed to fetch data'
-      setInputText('')
+      clearAll()
+      setOutputFormat('text')
+      toastStore.showError(err instanceof Error ? err.message : `Failed to fetch data from URL ${url}`);
     } finally {
       isLoading.value = false
     }
@@ -58,13 +61,11 @@ export const useConverterStore = defineStore('converter', () => {
     setOutputFormat(format);
 
     if (!hasInput.value) {
-      error.value = 'No input text to convert'
+      toastStore.showError('No input text to convert');
       return
     }
 
     try {
-      error.value = ''
-
       const parsedData: ParsedData = TextServiceParser.parseTextService(inputText.value)
       if (outputFormat.value === 'text') {
         outputText.value = inputText.value.toString() // copy text, not a refernce.
@@ -80,7 +81,7 @@ export const useConverterStore = defineStore('converter', () => {
         outputJson.value = JsonGenerator.generateJson(parsedData)
       }
     } catch (err) {
-      error.value = err instanceof Error ? err.message : 'Failed to convert text'
+      toastStore.showError(err instanceof Error ? err.message : 'Failed to convert text')
       outputXml.value = ''
       outputJson.value = ''
     }
@@ -91,24 +92,20 @@ export const useConverterStore = defineStore('converter', () => {
     outputText.value = ''
     outputXml.value = ''
     outputJson.value = ''
-    error.value = ''
   }
 
   function setInputText(text: string) {
     inputText.value = text
-    error.value = ''
   }
 
   function setOutputFormat(format: 'xml' | 'json' | 'text') {
     outputFormat.value = format
-    error.value = ''
   }
 
   return {
     // State
     inputText,
     isLoading,
-    error,
     outputFormat,
     urlInput,
     

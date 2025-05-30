@@ -6,7 +6,7 @@ const api = axios.create({
 })
 
 export class ApiClient {
-  
+
   static async fetchTextServiceData(): Promise<string> {
     try {
       const response = await api.get('/textservice', {
@@ -17,7 +17,7 @@ export class ApiClient {
       return response.data
     } catch (error) {
       console.error('Failed to fetch TextService data:', error)
-      throw new Error('Failed to fetch data from server')
+      throw new Error('Failed to fetch TextService data');
     }
   }
 

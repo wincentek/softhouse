@@ -7,12 +7,16 @@
     <div class="mt-8 bg-black">
         <TextServiceConverter />
     </div>
+
+    <!-- Toast Container -->
+    <ToastContainer />
   </v-app>
 </template>
 
 <script setup lang="ts">
 import AppHeader from './components/AppHeader.vue';
 import TextServiceConverter from './components/TextServiceConverter.vue'
+import ToastContainer from './components/ToastContainer.vue';
 import WorkMode from './components/WorkMode.vue';
 
 </script>

@@ -96,6 +96,7 @@
 import { useDisplay } from 'vuetify'
 import { storeToRefs } from 'pinia'
 import { useConverterStore } from '../stores/converter'
+import { useToastStore } from '../stores/toast'
 import { computed, ref, watch } from 'vue'
 
 const { xs, md } = useDisplay()
@@ -104,6 +105,7 @@ const { xs, md } = useDisplay()
 const buttonSize = computed(() => (xs.value ? 'small' : undefined))
 
 const store = useConverterStore()
+const toastStore = useToastStore()
 
 const {
   isLoading,
@@ -120,6 +122,8 @@ const {
   setInputText
 } = store
 
+const { showSuccess, showError } = toastStore
+
 // Create a separate reactive variable for the textarea
 const editableText = ref('')
 
@@ -135,14 +139,14 @@ watch(editableText, (newValue) => {
 })
 
 // Copy the current text amount to the clipboard
-const copyToClipboard = (): void => {
-  navigator.clipboard.writeText(editableText.value).then(() => {
-    console.log(`${outputFormat.value} copied to clipboard!`);
-  }).catch(err => {
-    console.error("Failed to copy text: ", err);
-  });
-  
-  alert(`${outputFormat.value} copied to clipboard!`);
+const copyToClipboard = async (): Promise<void> => {
+  try {
+    await navigator.clipboard.writeText(editableText.value)
+    showSuccess(`${outputFormat.value.toUpperCase()} copied to clipboard!`)
+  } catch (err) {
+    console.error("Failed to copy text: ", err)
+    showError("Failed to copy text to clipboard")
+  }
 }
 
 </script>

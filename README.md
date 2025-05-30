@@ -60,9 +60,12 @@ Användaren är van att starta script via CLI. Användaren har behov att göra s
 
 Tid: ca 120min
 
-## Metod 3: Databas, Backend och Frontend
+## Metod 3: Docker, Databas, Backend och Frontend
 
 Här ville jag testa att bygga ett något mer komplett system som simulerar hur ett riktigt textsystem kanske skulle fungera.
+
+### Docker
+Backend, db och fronend körs i en Dockercontainer.
 
 ### Databas
 
@@ -76,6 +79,8 @@ Ett NodeJS/Express-backend läser raderna från SQLite-databasen och exponerar v
 
 Det framgick inte hur data ska levereras eller matas in, så jag gjorde ett enkelt gränssnitt som kan läsa text från en URL (med Content-Type: text/plain) eller där man klistrar in hela textmassan direkt. XML visas som resultat, redo att kopieras.
 
+Eftersom jag parsade inkommande data till ett objekt så var det easy-peasy att göra ut till fler format, så jag till JSON som ett format också.
+
 ## Vem är användaren?
 
 Softhousepersonal är användaren, i praktiken känns ett sådant här gränssnitt tämligen overkill för uppgiften, men hävdar en fullstack så får en väl bevisa lite antar jag :)
@@ -84,7 +89,7 @@ Softhousepersonal är användaren, i praktiken känns ett sådant här gränssni
 
 [Instruktioner: textservice-converter](textservice-converter/README.md)
 
-Tid: ca 8-9h
+Tid: ca 10h
 
 ## Förbättringsförslag uppdragsbeskrivning
 

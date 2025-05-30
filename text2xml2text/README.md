@@ -3,7 +3,7 @@
 A simple CLI tool that converts between a structured text format and XML, and vice versa.
 
 ## 🖥️ Techstack
-The entire tool is implemented in Python, leveraging its standard library and built-in modules for simplicity and efficiency.
+The entire tool is implemented in Python3, leveraging its standard library and built-in modules for simplicity and efficiency.
 
 ## 🛠️ Usage
 
@@ -27,10 +27,10 @@ Run the script using the following command:
 
 ```
 Demo: 
-python text2xml2text.py --file demo.txt
+python3 text2xml2text.py --file demo.txt
 
 Use your own file
-python text2xml2text.py --file your_input_file.txt
+python3 text2xml2text.py --file your_input_file.txt
 ```
 
 - Accepts either `.txt` or `.xml` as input.

@@ -26,10 +26,11 @@ cd softhouse/text2xml2text
 Run the script using the following command:
 
 ```
-python text2xml2text.py --file your_input_file.txt
-
 Demo: 
 python text2xml2text.py --file demo.txt
+
+Use your own file
+python text2xml2text.py --file your_input_file.txt
 ```
 
 - Accepts either `.txt` or `.xml` as input.
@@ -56,7 +57,8 @@ Structured XML using `<person>`, `<phone>`, `<address>`, and `<family>` elements
 
 Output Files:
 - Files are saved in the same folder as the input.
-- The converted files are saved with a timestamp prefix in the format `YYYYMMDD_HHMMSS`.
+- The converted files, and errors, are saved with a timestamp prefix in the format `YYYYMMDD_HHMMSS`.
 - For example, if the input file is `example.txt`, the converted XML file will be named `20250527_153045_example_converted.xml`.
 - Similarly, if the input file is `example.xml`, the converted text file will be named `20250527_153045_example_converted.txt`.
+- If error lines were found, they're stored as `20250527_153045_errors_example_converted.txt`.
 """

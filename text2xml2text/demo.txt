@@ -14,8 +14,8 @@ T|070-1111111|090-111111
 A|Dalagatan 12|Umeå|90330
 T|070-2222222|090-222222
 F|Hugo|2012
-A|Björkvägen 3|Umeå|90335
-A|Lönngatan 8|Umeå|90336
+a|Björkvägen 3|Umeå|90335
+a|Lönngatan 8|Umeå|90336
 
 P|Anton|Lind
 F|Mira|2010

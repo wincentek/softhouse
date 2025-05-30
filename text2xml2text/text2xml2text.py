@@ -6,7 +6,7 @@ Usage:
 python text2xml2text.py --file input.txt
 
 Supported Input Format (TextService):
-- P|first name|last name           : Person entry
+- P|first name|last name          : Person entry
 - T|cell phone|landline phone     : Phone numbers
 - A|street|city|zip code          : Address information
 - F|name|year of birth            : Family member entry
@@ -59,8 +59,8 @@ def text_to_xml(text: str) -> Tuple[str, List[str]]:
                 errors.append(f"Line {idx} is invalid or empty: {line}")
                 continue
 
-        code = parts[0]
-
+        code = parts[0].upper()
+        
         try:
             if code == "P":
                 # Start a new <person> entry
@@ -163,7 +163,7 @@ def xml_to_text(xml: str) -> str:
     return "\n".join(lines)
 
 
-def save_to_file(data: str, filename: str) -> None:
+def save_to_file(data: str, filename: str, useExistingFileSuffix: bool) -> None:
     """
     Save output to file, using appropriate suffix.
 
@@ -180,7 +180,9 @@ def save_to_file(data: str, filename: str) -> None:
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
     # Determine new suffix for output
-    suffix = "xml" if suffix == "txt" else "txt"
+    if(useExistingFileSuffix == False):
+        suffix = "xml" if suffix == "txt" else "txt"
+    
     full_filename = f"{timestamp}_{base_filename}_converted.{suffix}"
 
     try:
@@ -209,6 +211,7 @@ if __name__ == "__main__":
         print(f"Error: File '{args.file}' not found.")
         exit(1)
 
+    fileName = os.path.splitext(os.path.basename(args.file))[0]
     suffix = os.path.splitext(os.path.basename(args.file))[1].lower().split(".")[-1]
     error_list = None
 
@@ -222,10 +225,11 @@ if __name__ == "__main__":
 
     # Output result and save
     print(result)
-    save_to_file(result, args.file)
+    save_to_file(result, args.file, False)
 
     # Print conversion errors if any
     if error_list:
         print("\n=== ERRORS ===\n")
+        save_to_file("\n".join(error_list), "errors_" + fileName + ".txt", True)
         for error in error_list:
             print(error)

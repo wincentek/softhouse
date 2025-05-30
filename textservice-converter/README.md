@@ -84,5 +84,6 @@ Open your browser and navigate to `http://localhost:3000`
    - **XML/JSON**: Read-only display of converted output
 3. **Copy output**: Use "Copy" button to save results to clipboard
 4. **Clear**: Reset all data with the "×" button
+5. **Errors**: Check the developer console for additional info.
 
 The application includes toast notifications for user feedback and comes pre-loaded with sample TextService data for testing.

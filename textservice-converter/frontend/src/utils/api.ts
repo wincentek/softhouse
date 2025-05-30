@@ -6,7 +6,7 @@ const api = axios.create({
 })
 
 export class ApiClient {
-
+  
   static async fetchTextServiceData(): Promise<string> {
     try {
       const response = await api.get('/textservice', {
@@ -17,7 +17,7 @@ export class ApiClient {
       return response.data
     } catch (error) {
       console.error('Failed to fetch TextService data:', error)
-      throw new Error('Failed to fetch TextService data');
+      throw new Error('Failed to fetch data from server')
     }
   }
 
@@ -28,16 +28,17 @@ export class ApiClient {
         return await this.fetchTextServiceData()
       }
       
-      // For external URLs, try direct fetch (may be blocked by CORS)
+      // For external URLs, use our backend proxy to avoid CORS
       if (url.startsWith('http')) {
-        const response = await fetch(url)
+        const proxyUrl = `${import.meta.env.VITE_API_BASE_URL || '/api/v1'}/proxy?url=${encodeURIComponent(url)}`
+        const response = await fetch(proxyUrl)
         if (!response.ok) {
           throw new Error(`HTTP ${response.status}: ${response.statusText}`)
         }
         return await response.text()
       }
       
-      // For relative URLs, use our API proxy if available
+      // For relative URLs, try direct fetch
       const response = await fetch(url)
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`)

@@ -18,6 +18,42 @@ router.get('/textservice', async (req: Request, res: Response) => {
   }
 });
 
+// GET /api/v1/proxy - Proxy external URLs to avoid CORS
+router.get('/proxy', async (req: Request, res: Response) => {
+  try {
+    const url = req.query.url as string;
+    
+    if (!url) {
+      return res.status(400).send('URL parameter is required');
+    }
+
+    // Validate URL format
+    try {
+      new URL(url);
+    } catch {
+      return res.status(400).send('Invalid URL format');
+    }
+
+    // Fetch the external URL
+    const response = await fetch(url);
+    
+    if (!response.ok) {
+      return res.status(response.status).send(`External server error: ${response.statusText}`);
+    }
+
+    const data = await response.text();
+    
+    // Return as plain text with CORS headers
+    res.setHeader('Content-Type', 'text/plain');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.send(data);
+    
+  } catch (error) {
+    console.error('Error proxying URL:', error);
+    res.status(500).send('Failed to fetch external URL');
+  }
+});
+
 // GET /api/v1/healthcheck - Simple health check endpoint
 router.get('/healthcheck', async (req: Request, res: Response) => {
   return res.status(200).send('Hello Softhouse. Allt bra eller? Här är det finfint :)');

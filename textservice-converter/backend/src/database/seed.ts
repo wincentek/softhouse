@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import { connectDatabase, insertTextServiceData, clearTextServiceData } from './';
+import { connectDatabase, insertTextServiceData, clearTextServiceData, getAllTextServiceData } from './';
 
 dotenv.config();
 
@@ -172,6 +172,34 @@ function parseIntoPersonBlocks(data: string): string[] {
   return personBlocks;
 }
 
+export async function seedDatabaseIfEmpty() {
+  try {
+    // Check if database already has data
+    const existingData = await getAllTextServiceData();
+    if (existingData.length > 0) {
+      console.log('📦 Database already contains data, skipping seed');
+      return;
+    }
+
+    console.log('🌱 Database is empty, seeding with sample data...');
+    
+    // Parse data into person blocks
+    const personBlocks = parseIntoPersonBlocks(textServiceData);
+    console.log(`📦 Found ${personBlocks.length} person blocks`);
+    
+    // Insert each person block
+    for (const block of personBlocks) {
+      await insertTextServiceData(block);
+    }
+    
+    console.log(`✅ Successfully seeded ${personBlocks.length} records`);
+    
+  } catch (error) {
+    console.error('❌ Seeding failed:', error);
+    throw error;
+  }
+}
+
 async function seedDatabase() {
   try {
     console.log('🌱 Starting database seeding...');
@@ -200,4 +228,7 @@ async function seedDatabase() {
   }
 }
 
-seedDatabase();
+// Only run seeding if this file is executed directly
+if (require.main === module) {
+  seedDatabase();
+}

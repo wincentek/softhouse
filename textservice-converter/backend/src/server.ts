@@ -3,11 +3,12 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { connectDatabase } from './database';
 import textServiceRoutes from './routes';
+import { seedDatabaseIfEmpty } from './database/seed';
 
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = parseInt(process.env.PORT || '3001', 10);
 
 // Middleware
 app.use(cors());
@@ -27,7 +28,11 @@ async function startServer() {
     await connectDatabase();
     console.log('✅ Database connected successfully');
     
-    app.listen(PORT, () => {
+    // Seed database if empty (for Docker container)
+    await seedDatabaseIfEmpty();
+    console.log('✅ Database seeding completed');
+    
+    app.listen(PORT, '0.0.0.0', () => {
       console.log(`🚀 Server running on port ${PORT}`);
       console.log(`📡 API available at http://localhost:${PORT}/api/v1`);
     });
